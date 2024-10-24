@@ -1,0 +1,11 @@
+services:
+  mysql:
+    image: mysql:lts
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=1q2w3e4r
+      - MYSQL_DATABASE=root
+    volumes:
+      - ./scaffold.sql:/docker-entrypoint-initdb.d/scaffold.sql
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']

@@ -1,7 +1,7 @@
 {{define "title"}}Create a New Snippet{{end}}
 
 {{define "main"}}
-<form action="/snippet/create" method="POST">
+<form action="/snippet" method="POST">
   <div>
     <label>Title: </label>
     {{with .Form.FieldErrors.title}}

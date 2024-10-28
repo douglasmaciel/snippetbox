@@ -9,10 +9,10 @@ func (app *application) routes() http.Handler {
 	mux := http.NewServeMux()
 	fileServer := http.FileServer(neuteredFileSystem{http.Dir("./ui/static/")})
 	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
-	mux.HandleFunc("GET /{$}", app.home)
-	mux.HandleFunc("GET /snippets/{id}", app.snippetView)
-	mux.HandleFunc("GET /snippet", app.snippetCreate)
-	mux.HandleFunc("POST /snippet", app.snippetCreatePost)
+	mux.Handle("GET /{$}", app.sessionManager.LoadAndSave(http.HandlerFunc(app.home)))
+	mux.Handle("GET /snippets/{id}", app.sessionManager.LoadAndSave(http.HandlerFunc(app.snippetView)))
+	mux.Handle("GET /snippet", app.sessionManager.LoadAndSave(http.HandlerFunc(app.snippetCreate)))
+	mux.Handle("POST /snippet", app.sessionManager.LoadAndSave(http.HandlerFunc(app.snippetCreatePost)))
 	return app.recoverPanic(app.logRequest(commonHeaders(mux)))
 }
 
